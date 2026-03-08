@@ -33,10 +33,10 @@ export default function BudgetsSection({ budgets, transactionsThisMonth, onOpenM
     const isWarning = !isOver && percent > 80;
 
     const barColor = isOver
-      ? '#F43F5E'
+      ? 'var(--color-expense)'
       : isWarning
-        ? '#F59E0B'
-        : CATEGORY_COLORS[category] ?? '#2774AE';
+        ? 'var(--color-warning)'
+        : CATEGORY_COLORS[category] ?? 'var(--color-primary)';
 
     return { spent, limit, percent, isOver, isWarning, barColor };
   };
@@ -57,31 +57,16 @@ export default function BudgetsSection({ budgets, transactionsThisMonth, onOpenM
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-base font-semibold" style={{ color: '#F1F5F9' }}>
+          <h3 className="text-base font-semibold text-text-primary">
             Budget Tracker
           </h3>
-          <p className="text-xs mt-0.5" style={{ color: '#64748B' }}>
+          <p className="text-xs text-text-secondary mt-0.5">
             {hasAny ? `${activeCategories.length} categories tracked` : 'Set limits per category'}
           </p>
         </div>
         <button
           onClick={onOpenModal}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-          style={{
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            color: '#94A3B8',
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(39,116,174,0.15)';
-            (e.currentTarget as HTMLButtonElement).style.color = '#5EA5DB';
-            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(39,116,174,0.3)';
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.05)';
-            (e.currentTarget as HTMLButtonElement).style.color = '#94A3B8';
-            (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.1)';
-          }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] bg-surface-alt border border-border-strong text-text-secondary hover:bg-primary-dim hover:text-primary-light hover:border-primary"
         >
           <Settings size={13} />
           Edit Budgets
@@ -94,13 +79,12 @@ export default function BudgetsSection({ budgets, transactionsThisMonth, onOpenM
           className="glass-card rounded-2xl py-10 text-center"
         >
           <div
-            className="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center"
-            style={{ background: 'rgba(255,255,255,0.04)' }}
+            className="w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center bg-surface-alt"
           >
-            <Settings size={22} style={{ color: '#334155' }} />
+            <Settings size={22} className="text-text-secondary" />
           </div>
-          <p className="text-sm font-medium" style={{ color: '#475569' }}>No budgets configured</p>
-          <p className="text-xs mt-1" style={{ color: '#334155' }}>
+          <p className="text-sm font-medium text-text-secondary">No budgets configured</p>
+          <p className="text-xs text-text-tertiary mt-1">
             Click "Edit Budgets" to set monthly limits
           </p>
         </div>
@@ -108,7 +92,7 @@ export default function BudgetsSection({ budgets, transactionsThisMonth, onOpenM
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {activeCategories.map((cat, i) => {
             const { spent, limit, percent, isOver, isWarning, barColor } = getBudgetStatus(cat);
-            const catColor = CATEGORY_COLORS[cat] ?? '#2774AE';
+            const catColor = CATEGORY_COLORS[cat] ?? 'var(--color-primary)';
 
             return (
               <motion.div
@@ -128,40 +112,30 @@ export default function BudgetsSection({ budgets, transactionsThisMonth, onOpenM
                   {/* Header row */}
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <p className="text-sm font-semibold" style={{ color: '#F1F5F9' }}>
+                      <p className="text-sm font-semibold text-text-primary">
                         {cat}
                       </p>
                       {isOver && (
                         <span
-                          className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
-                          style={{
-                            background: 'rgba(244,63,94,0.12)',
-                            color: '#F43F5E',
-                            border: '1px solid rgba(244,63,94,0.2)',
-                          }}
+                          className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-expense-dim text-expense border border-red-300"
                         >
                           OVER BUDGET
                         </span>
                       )}
                       {isWarning && !isOver && (
                         <span
-                          className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
-                          style={{
-                            background: 'rgba(245,158,11,0.12)',
-                            color: '#F59E0B',
-                            border: '1px solid rgba(245,158,11,0.2)',
-                          }}
+                          className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-warning-dim text-warning border border-amber-300"
                         >
                           NEAR LIMIT
                         </span>
                       )}
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-bold" style={{ color: isOver ? '#F43F5E' : '#F1F5F9' }}>
+                      <p className={`text-sm font-bold ${isOver ? 'text-expense' : 'text-text-primary'}`}>
                         ₦{formatMoney(spent)}
                       </p>
                       {limit > 0 && (
-                        <p className="text-xs" style={{ color: '#475569' }}>
+                        <p className="text-xs text-text-secondary">
                           of ₦{formatMoney(limit)}
                         </p>
                       )}
@@ -172,8 +146,7 @@ export default function BudgetsSection({ budgets, transactionsThisMonth, onOpenM
                   {limit > 0 && (
                     <div className="relative">
                       <div
-                        className="w-full h-1.5 rounded-full overflow-hidden"
-                        style={{ background: 'rgba(255,255,255,0.06)' }}
+                        className="w-full h-1.5 rounded-full overflow-hidden bg-surface-alt"
                       >
                         <motion.div
                           className="h-full rounded-full"
@@ -183,7 +156,7 @@ export default function BudgetsSection({ budgets, transactionsThisMonth, onOpenM
                           transition={{ duration: 0.6, delay: 0.1 + i * 0.04, ease: 'easeOut' }}
                         />
                       </div>
-                      <p className="text-[10px] mt-1.5" style={{ color: '#475569' }}>
+                      <p className="text-[10px] text-text-secondary mt-1.5">
                         {isOver
                           ? `₦${formatMoney(spent - limit)} over`
                           : `${Math.round(percent)}% used · ₦${formatMoney(limit - spent)} left`}

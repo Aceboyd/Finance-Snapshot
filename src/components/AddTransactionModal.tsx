@@ -63,20 +63,14 @@ export default function AddTransactionModal({ onAdd, onClose }: Props) {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
-        style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' }}
+        className="fixed inset-0 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4 bg-black/70 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
         <motion.div
-          className="w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl overflow-hidden"
-          style={{
-            background: '#0D1526',
-            border: '1px solid rgba(255,255,255,0.09)',
-            boxShadow: '0 24px 64px rgba(0,0,0,0.7)',
-          }}
+          className="glass-card w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl overflow-hidden shadow-modal"
           variants={MODAL_VARIANTS}
           initial="hidden"
           animate="visible"
@@ -85,25 +79,19 @@ export default function AddTransactionModal({ onAdd, onClose }: Props) {
         >
           {/* ── Header ─────────────────────────────── */}
           <div
-            className="flex items-center justify-between px-6 pt-6 pb-5"
-            style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
+            className="flex items-center justify-between px-6 pt-6 pb-5 border-b border-border-strong"
           >
             <div>
-              <h2 className="text-lg font-semibold" style={{ color: '#F1F5F9' }}>
+              <h2 className="text-lg font-semibold text-text-primary">
                 New Transaction
               </h2>
-              <p className="text-xs mt-0.5" style={{ color: '#475569' }}>
+              <p className="text-xs text-text-secondary mt-0.5">
                 Record an income or expense
               </p>
             </div>
             <button
               onClick={onClose}
-              className="w-8 h-8 rounded-xl flex items-center justify-center transition-all hover:scale-110"
-              style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                color: '#64748B',
-              }}
+              className="w-8 h-8 rounded-xl flex items-center justify-center transition-all hover:scale-110 bg-surface-alt border border-border-strong text-text-secondary"
             >
               <X size={15} />
             </button>
@@ -115,36 +103,19 @@ export default function AddTransactionModal({ onAdd, onClose }: Props) {
             <div>
               <label className="label-text">Transaction Type</label>
               <div
-                className="flex gap-2 p-1 rounded-xl"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                }}
+                className="flex gap-2 p-1 rounded-xl bg-surface-alt border border-border-strong"
               >
                 {(['expense', 'income'] as const).map((t) => (
                   <button
                     key={t}
                     onClick={() => handleTypeChange(t)}
-                    className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
-                    style={
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
                       form.type === t
                         ? t === 'income'
-                          ? {
-                              background: 'rgba(16,185,129,0.18)',
-                              color: '#10B981',
-                              border: '1px solid rgba(16,185,129,0.25)',
-                            }
-                          : {
-                              background: 'rgba(244,63,94,0.18)',
-                              color: '#F43F5E',
-                              border: '1px solid rgba(244,63,94,0.25)',
-                            }
-                        : {
-                            background: 'transparent',
-                            color: '#475569',
-                            border: '1px solid transparent',
-                          }
-                    }
+                          ? 'bg-income-dim text-income border border-green-300'
+                          : 'bg-expense-dim text-expense border border-red-300'
+                        : 'bg-transparent text-text-secondary border border-transparent'
+                    }`}
                   >
                     {t === 'income' ? (
                       <TrendingUp size={14} />
@@ -183,8 +154,7 @@ export default function AddTransactionModal({ onAdd, onClose }: Props) {
               <label className="label-text">Amount (₦)</label>
               <div className="relative">
                 <span
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold pointer-events-none"
-                  style={{ color: isIncome ? '#10B981' : '#F43F5E' }}
+                  className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold pointer-events-none ${isIncome ? 'text-income' : 'text-expense'}`}
                 >
                   ₦
                 </span>
@@ -196,14 +166,13 @@ export default function AddTransactionModal({ onAdd, onClose }: Props) {
                     setForm({ ...form, amount: e.target.value });
                     setError('');
                   }}
-                  className="glass-input"
-                  style={{ paddingLeft: '1.75rem' }}
+                  className="glass-input pl-7"
                   min="0"
                   step="any"
                 />
               </div>
               {error && (
-                <p className="text-xs mt-1.5" style={{ color: '#F43F5E' }}>
+                <p className="text-xs text-expense mt-1.5">
                   {error}
                 </p>
               )}
@@ -214,12 +183,7 @@ export default function AddTransactionModal({ onAdd, onClose }: Props) {
               <label className="label-text">
                 Description{' '}
                 <span
-                  style={{
-                    color: '#334155',
-                    fontWeight: 400,
-                    textTransform: 'none',
-                    letterSpacing: 0,
-                  }}
+                  className="text-text-tertiary font-normal normal-case tracking-normal"
                 >
                   (optional)
                 </span>
@@ -248,36 +212,21 @@ export default function AddTransactionModal({ onAdd, onClose }: Props) {
 
           {/* ── Footer ─────────────────────────────── */}
           <div
-            className="flex gap-3 px-6 py-4"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
+            className="flex gap-3 px-6 py-4 border-t border-border-strong"
           >
             <button
               onClick={onClose}
-              className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-80"
-              style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                color: '#64748B',
-              }}
+              className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-80 bg-surface-alt border border-border-strong text-text-secondary"
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
-              className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-              style={
+              className={`flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg ${
                 isIncome
-                  ? {
-                      background: 'linear-gradient(135deg, #10B981, #059669)',
-                      color: '#fff',
-                      boxShadow: '0 4px 16px rgba(16,185,129,0.3)',
-                    }
-                  : {
-                      background: 'linear-gradient(135deg, #F43F5E, #E11D48)',
-                      color: '#fff',
-                      boxShadow: '0 4px 16px rgba(244,63,94,0.3)',
-                    }
-              }
+                  ? 'bg-gradient-to-r from-income to-green-600 shadow-income/30'
+                  : 'bg-gradient-to-r from-expense to-red-600 shadow-expense/30'
+              }`}
             >
               Add {isIncome ? 'Income' : 'Expense'}
             </button>

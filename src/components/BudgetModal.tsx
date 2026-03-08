@@ -43,21 +43,15 @@ export default function BudgetModal({ budgets, onSave, onClose }: Props) {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
-        style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' }}
+        className="fixed inset-0 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4 bg-black/70 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
         <motion.div
-          className="w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl flex flex-col"
-          style={{
-            background: '#0D1526',
-            border: '1px solid rgba(255,255,255,0.09)',
-            boxShadow: '0 24px 64px rgba(0,0,0,0.7)',
-            maxHeight: '90dvh',
-          }}
+          className="glass-card w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl flex flex-col shadow-modal"
+          style={{ maxHeight: '90dvh' }}
           initial={{ opacity: 0, scale: 0.94, y: 16 }}
           animate={{
             opacity: 1,
@@ -70,36 +64,26 @@ export default function BudgetModal({ budgets, onSave, onClose }: Props) {
         >
           {/* ── Header ─────────────────────────────── */}
           <div
-            className="flex items-center justify-between px-6 pt-6 pb-5 flex-shrink-0"
-            style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
+            className="flex items-center justify-between px-6 pt-6 pb-5 flex-shrink-0 border-b border-border-strong"
           >
             <div className="flex items-center gap-3">
               <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{
-                  background: 'rgba(39,116,174,0.15)',
-                  border: '1px solid rgba(39,116,174,0.25)',
-                }}
+                className="w-9 h-9 rounded-xl flex items-center justify-center bg-primary-dim border border-primary/20"
               >
-                <Target size={17} style={{ color: '#2774AE' }} />
+                <Target size={17} className="text-primary" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold" style={{ color: '#F1F5F9' }}>
+                <h2 className="text-lg font-semibold text-text-primary">
                   Monthly Budgets
                 </h2>
-                <p className="text-xs" style={{ color: '#475569' }}>
+                <p className="text-xs text-text-secondary">
                   Set spending limits per category
                 </p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="w-8 h-8 rounded-xl flex items-center justify-center transition-all hover:scale-110"
-              style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                color: '#64748B',
-              }}
+              className="w-8 h-8 rounded-xl flex items-center justify-center transition-all hover:scale-110 bg-surface-alt border border-border-strong text-text-secondary"
             >
               <X size={15} />
             </button>
@@ -114,11 +98,7 @@ export default function BudgetModal({ budgets, onSave, onClose }: Props) {
               return (
                 <div
                   key={cat}
-                  className="flex items-center gap-4 p-3 rounded-xl transition-colors"
-                  style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.06)',
-                  }}
+                  className="flex items-center gap-4 p-3 rounded-xl transition-colors bg-surface-alt border border-border-strong"
                 >
                   {/* Color dot */}
                   <div
@@ -129,8 +109,7 @@ export default function BudgetModal({ budgets, onSave, onClose }: Props) {
                   {/* Label */}
                   <label
                     htmlFor={`budget-${cat}`}
-                    className="flex-1 text-sm font-medium cursor-pointer"
-                    style={{ color: '#CBD5E1' }}
+                    className="flex-1 text-sm font-medium cursor-pointer text-text-primary"
                   >
                     {cat}
                   </label>
@@ -139,7 +118,7 @@ export default function BudgetModal({ budgets, onSave, onClose }: Props) {
                   <div className="relative w-36">
                     <span
                       className="absolute left-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none"
-                      style={{ color: hasValue ? catColor : '#334155' }}
+                      style={{ color: hasValue ? catColor : 'var(--color-text-tertiary)' }}
                     >
                       ₦
                     </span>
@@ -152,10 +131,7 @@ export default function BudgetModal({ budgets, onSave, onClose }: Props) {
                       placeholder="No limit"
                       className="glass-input text-right"
                       style={{
-                        paddingLeft: '1.75rem',
-                        paddingRight: '0.75rem',
-                        paddingTop: '0.5rem',
-                        paddingBottom: '0.5rem',
+                        padding: '0.5rem 0.75rem 0.5rem 1.75rem',
                         fontSize: '0.875rem',
                         ...(hasValue
                           ? { borderColor: `${catColor}40`, color: catColor }
@@ -167,35 +143,24 @@ export default function BudgetModal({ budgets, onSave, onClose }: Props) {
               );
             })}
 
-            <p className="text-xs pt-1" style={{ color: '#334155' }}>
+            <p className="text-xs text-text-tertiary pt-1">
               Leave blank or set to 0 for no spending limit.
             </p>
           </div>
 
           {/* ── Footer ─────────────────────────────── */}
           <div
-            className="flex gap-3 px-6 py-4 flex-shrink-0"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
+            className="flex gap-3 px-6 py-4 flex-shrink-0 border-t border-border-strong"
           >
             <button
               onClick={onClose}
-              className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-80"
-              style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                color: '#64748B',
-              }}
+              className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-80 bg-surface-alt border border-border-strong text-text-secondary"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-              style={{
-                background: 'linear-gradient(135deg, #2774AE, #1A4D74)',
-                color: '#fff',
-                boxShadow: '0 4px 16px rgba(39,116,174,0.3)',
-              }}
+              className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] bg-gradient-to-r from-primary to-blue-700 shadow-lg shadow-primary/30"
             >
               Save Budgets
             </button>

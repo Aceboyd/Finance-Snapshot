@@ -13,15 +13,14 @@ export default function TransactionsList({ transactions, onDelete }: Props) {
     return (
       <div className="flex flex-col items-center justify-center py-14 gap-3">
         <div
-          className="w-14 h-14 rounded-2xl flex items-center justify-center"
-          style={{ background: 'rgba(255,255,255,0.04)' }}
+          className="w-14 h-14 rounded-2xl flex items-center justify-center bg-surface-alt"
         >
-          <ReceiptText size={24} style={{ color: '#334155' }} />
+          <ReceiptText size={24} className="text-text-secondary" />
         </div>
-        <p className="text-sm font-medium" style={{ color: '#475569' }}>
+        <p className="text-sm font-medium text-text-secondary">
           No transactions this month
         </p>
-        <p className="text-xs" style={{ color: '#334155' }}>
+        <p className="text-xs text-text-tertiary">
           Add your first transaction to get started
         </p>
       </div>

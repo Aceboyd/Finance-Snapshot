@@ -114,30 +114,22 @@ export default function Visualizations({ expenseByCategory, totalIncome, totalEx
 
   const barData = [{ name: 'This Month', Income: totalIncome, Expenses: totalExpenses }];
 
-  const cardStyle = {
-    background: 'rgba(255,255,255,0.025)',
-    border: '1px solid rgba(255,255,255,0.07)',
-    borderRadius: '16px',
-    padding: '20px 24px',
-    boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
-  };
-
   const AXIS_TICK_STYLE = { fill: '#475569', fontSize: 12, fontFamily: 'Inter, system-ui' };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {/* ── Pie Chart ───────────────────────── */}
       <motion.div
-        style={cardStyle}
+        className="glass-card rounded-2xl p-6 shadow-card"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
         <div className="mb-4">
-          <h3 className="text-sm font-semibold" style={{ color: '#F1F5F9' }}>
+          <h3 className="text-sm font-semibold text-text-primary">
             Expenses by Category
           </h3>
-          <p className="text-xs mt-0.5" style={{ color: '#64748B' }}>
+          <p className="text-xs mt-0.5 text-text-secondary">
             {hasExpenses ? `${positiveExpenses.length} active categories` : 'No data yet'}
           </p>
         </div>
@@ -145,14 +137,13 @@ export default function Visualizations({ expenseByCategory, totalIncome, totalEx
         {!hasExpenses ? (
           <div className="h-64 flex flex-col items-center justify-center gap-3">
             <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ background: 'rgba(255,255,255,0.04)' }}
+              className="w-16 h-16 rounded-2xl flex items-center justify-center bg-surface-alt"
             >
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#334155" strokeWidth="1.5">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-text-secondary">
                 <path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" />
               </svg>
             </div>
-            <p className="text-sm" style={{ color: '#475569' }}>No expenses this month</p>
+            <p className="text-sm text-text-secondary">No expenses this month</p>
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={260}>
@@ -185,16 +176,16 @@ export default function Visualizations({ expenseByCategory, totalIncome, totalEx
 
       {/* ── Bar Chart ───────────────────────── */}
       <motion.div
-        style={cardStyle}
+        className="glass-card rounded-2xl p-6 shadow-card"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.18 }}
       >
         <div className="mb-4">
-          <h3 className="text-sm font-semibold" style={{ color: '#F1F5F9' }}>
+          <h3 className="text-sm font-semibold text-text-primary">
             Income vs Spending
           </h3>
-          <p className="text-xs mt-0.5" style={{ color: '#64748B' }}>
+          <p className="text-xs mt-0.5 text-text-secondary">
             Monthly overview
           </p>
         </div>

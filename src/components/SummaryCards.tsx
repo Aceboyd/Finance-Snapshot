@@ -19,7 +19,6 @@ interface CardConfig {
   accentColor: string;
   dimColor: string;
   textColor: string;
-  prefix: string;
 }
 
 export default function SummaryCards({ totalIncome, totalExpenses }: Props) {
@@ -33,28 +32,25 @@ export default function SummaryCards({ totalIncome, totalExpenses }: Props) {
       label: 'Total Income',
       value: totalIncome,
       icon: <TrendingUp size={20} />,
-      accentColor: '#10B981',
-      dimColor: 'rgba(16,185,129,0.12)',
-      textColor: '#10B981',
-      prefix: '+',
+      accentColor: 'var(--color-income)',
+      dimColor: 'var(--color-income-dim)',
+      textColor: 'var(--color-income)',
     },
     {
       label: 'Total Expenses',
       value: totalExpenses,
       icon: <TrendingDown size={20} />,
-      accentColor: '#F43F5E',
-      dimColor: 'rgba(244,63,94,0.12)',
-      textColor: '#F43F5E',
-      prefix: '−',
+      accentColor: 'var(--color-expense)',
+      dimColor: 'var(--color-expense-dim)',
+      textColor: 'var(--color-expense)',
     },
     {
       label: 'Net Balance',
       value: balance,
       icon: <Wallet size={20} />,
-      accentColor: balance >= 0 ? '#2774AE' : '#F43F5E',
-      dimColor: balance >= 0 ? 'rgba(39,116,174,0.12)' : 'rgba(244,63,94,0.12)',
-      textColor: balance >= 0 ? '#5EA5DB' : '#F43F5E',
-      prefix: balance >= 0 ? '+' : '−',
+      accentColor: balance >= 0 ? 'var(--color-primary)' : 'var(--color-expense)',
+      dimColor: balance >= 0 ? 'var(--color-primary-dim)' : 'var(--color-expense-dim)',
+      textColor: balance >= 0 ? 'var(--color-primary-light)' : 'var(--color-expense)',
     },
   ];
 
@@ -63,16 +59,15 @@ export default function SummaryCards({ totalIncome, totalExpenses }: Props) {
       {cards.map((card, i) => (
         <motion.div
           key={card.label}
-          className="glass-card rounded-2xl p-5 relative overflow-hidden group"
+          className="glass-card rounded-2xl p-5 relative overflow-hidden group shadow-card"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: i * 0.08, ease: 'easeOut' }}
           whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-          style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.2)' }}
         >
           {/* Top accent line */}
           <div
-            className="absolute top-0 left-0 right-0 h-[2px] rounded-t-2xl"
+            className="absolute top-0 left-0 right-0 h-[2px]"
             style={{ background: card.accentColor }}
           />
 
@@ -108,23 +103,23 @@ export default function SummaryCards({ totalIncome, totalExpenses }: Props) {
 
           {/* Sub info */}
           {card.label === 'Net Balance' && totalIncome > 0 && (
-            <p className="text-xs mt-2" style={{ color: '#64748B' }}>
+            <p className="text-xs text-text-secondary mt-2">
               {savingsRate >= 0 ? (
-                <span style={{ color: '#10B981' }}>↑ {savingsRate}% savings rate</span>
+                <span className="text-income">↑ {savingsRate}% savings rate</span>
               ) : (
-                <span style={{ color: '#F43F5E' }}>↓ {Math.abs(savingsRate)}% over budget</span>
+                <span className="text-expense">↓ {Math.abs(savingsRate)}% over budget</span>
               )}
             </p>
           )}
           {card.label === 'Total Income' && totalIncome > 0 && (
-            <p className="text-xs mt-2" style={{ color: '#64748B' }}>
+            <p className="text-xs text-text-secondary mt-2">
               {totalExpenses > 0
                 ? `${Math.round((totalExpenses / totalIncome) * 100)}% spent`
                 : 'Nothing spent yet'}
             </p>
           )}
           {card.label === 'Total Expenses' && totalExpenses > 0 && (
-            <p className="text-xs mt-2" style={{ color: '#64748B' }}>
+            <p className="text-xs text-text-secondary mt-2">
               Across all categories
             </p>
           )}

@@ -86,7 +86,7 @@ export default function App() {
   return (
     <div
       className="min-h-screen"
-      style={{ background: 'linear-gradient(160deg, #080D1A 0%, #0A1020 40%, #070C18 100%)' }}
+      style={{ background: 'white' }}
     >
       {/* Ambient background glows */}
       <div
@@ -112,9 +112,9 @@ export default function App() {
         toastOptions={{
           duration: 4000,
           style: {
-            background: '#0D1526',
-            color: '#F1F5F9',
-            border: '1px solid rgba(255,255,255,0.1)',
+            background: 'var(--color-surface)',
+            color: 'var(--color-text-primary)',
+            border: '1px solid var(--color-border)',
             borderRadius: '12px',
             fontSize: '0.875rem',
             fontFamily: 'Inter, system-ui, sans-serif',
@@ -132,12 +132,7 @@ export default function App() {
           transition={{ duration: 0.5 }}
         >
           {/* Logo pill */}
-          <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase"
-            style={{
-              background: 'rgba(39,116,174,0.12)',
-              border: '1px solid rgba(39,116,174,0.25)',
-              color: '#5EA5DB',
-            }}
+          <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-primary-dim border border-primary text-primary-light"
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 14.93V18h-2v-1.07A4.002 4.002 0 0 1 8 13h2a2 2 0 1 0 2-2 4 4 0 0 1-1-7.93V2h2v1.07A4.002 4.002 0 0 1 16 7h-2a2 2 0 1 0-2 2 4 4 0 0 1 1 7.93z" />
@@ -148,7 +143,7 @@ export default function App() {
           <h1
             className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-none"
             style={{
-              background: 'linear-gradient(135deg, #F1F5F9 0%, #94A3B8 50%, #5EA5DB 100%)',
+              background: 'linear-gradient(135deg, #F1F5F9 0%, #375b8eff 50%, #5EA5DB 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -156,7 +151,7 @@ export default function App() {
           >
             Finance Snapshot
           </h1>
-          <p className="mt-3 text-base" style={{ color: '#64748B' }}>
+          <p className="mt-3 text-base text-text-secondary">
             Track smarter. Spend wiser. Live better.
           </p>
         </motion.header>
@@ -194,15 +189,12 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.3 }}
           >
-            <div
-              className="flex items-center justify-between px-6 py-5"
-              style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
-            >
+            <div className="flex items-center justify-between px-6 py-5 border-b border-border">
               <div>
-                <h3 className="text-lg font-semibold" style={{ color: '#F1F5F9' }}>
+                <h3 className="text-lg font-semibold text-text-primary">
                   Recent Activity
                 </h3>
-                <p className="text-xs mt-0.5" style={{ color: '#64748B' }}>
+                <p className="text-xs mt-0.5 text-text-secondary">
                   {filtered.length} transaction{filtered.length !== 1 ? 's' : ''} this month
                 </p>
               </div>
@@ -229,7 +221,7 @@ export default function App() {
         </div>
 
         {/* ── Footer ───────────────────────────────── */}
-        <footer className="mt-12 text-center text-xs" style={{ color: '#334155' }}>
+        <footer className="mt-12 text-center text-xs text-text-secondary">
           Finance Snapshot · Data stored locally in your browser
         </footer>
       </div>
